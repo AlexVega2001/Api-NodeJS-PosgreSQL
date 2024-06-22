@@ -18,11 +18,10 @@ const RegisterUser = async (
   p_identificacion,
   p_fecha_nacimiento,
   u_username,
-  u_password,
-  u_status
+  u_password
 ) => {
   try {
-    const query = "SELECT agregar_usuario($1, $2, $3, $4, $5, $6, $7, $8, $9)";
+    const query = "SELECT agregar_usuario($1, $2, $3, $4, $5, $6, $7, $8)";
     const { rows } = await pool.query(query, [
       p_primer_nombre,
       p_segundo_nombre,
@@ -31,8 +30,7 @@ const RegisterUser = async (
       p_identificacion,
       p_fecha_nacimiento,
       u_username,
-      u_password,
-      u_status,
+      u_password
     ]);
     return rows[0].agregar_usuario;
   } catch (error) {
@@ -80,20 +78,20 @@ const InactiveUser = async (p_idUsuario) => {
   }
 };
 
-const CloseSession = async (p_idSesion) => {
+const CloseSession = async (p_idSesion, p_idUsuario) => {
   try {
-    const query = "SELECT cerrar_sesion($1)";
-    const { rows } = await pool.query(query, [p_idSesion]);
+    const query = "SELECT cerrar_sesion($1, $2)";
+    const { rows } = await pool.query(query, [p_idSesion, p_idUsuario]);
     return rows[0].cerrar_sesion;
   } catch (error) {
     console.log("Error en la consulta a la BD: " + error);
   }
 };
 
-const LoginUser = async (u_username, u_password) => {
+const LoginUser = async (u_username_mail, u_password) => {
   try {
     const query = "SELECT loguear_usuario($1, $2)";
-    const { rows } = await pool.query(query, [u_username, u_password]);
+    const { rows } = await pool.query(query, [u_username_mail, u_password]);
     return rows[0].loguear_usuario;
   } catch (error) {
     console.log("Error en la consulta a la BD: " + error);

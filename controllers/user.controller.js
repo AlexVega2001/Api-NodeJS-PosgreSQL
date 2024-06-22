@@ -20,8 +20,7 @@ const RegisterUserController = async (req, res) => {
       p_identificacion,
       p_fecha_nacimiento,
       u_username,
-      u_password,
-      u_status,
+      u_password
     } = req.body;
     const response = await userModel.RegisterUser(
       p_primer_nombre,
@@ -31,8 +30,7 @@ const RegisterUserController = async (req, res) => {
       p_identificacion,
       p_fecha_nacimiento,
       u_username,
-      u_password,
-      u_status
+      u_password
     );
     res.json(response);
   } catch (error) {
@@ -83,8 +81,8 @@ const RegisterRoleController = async (req, res) => {
 
   const CloseSessionController = async (req, res) => {
     try {
-      const { p_idSesion } = req.body;
-      const response = await userModel.CloseSession(p_idSesion);
+      const { p_idSesion, p_idUsuario } = req.body;
+      const response = await userModel.CloseSession(p_idSesion, p_idUsuario);
       res.json(response);
     } catch (error) {
       console.log(error);
@@ -93,8 +91,8 @@ const RegisterRoleController = async (req, res) => {
 
   const LoginUserController = async (req, res) => {
     try {
-      const { u_username, u_password } = req.body;
-      const response = await userModel.LoginUser(u_username, u_password);
+      const { u_username_mail, u_password } = req.body;
+      const response = await userModel.LoginUser(u_username_mail, u_password);
       res.json(response);
     } catch (error) {
       console.log(error);
